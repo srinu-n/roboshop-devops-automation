@@ -1,0 +1,10 @@
+- name: varibles from the inventory file
+  hosts: webServers
+  become: yes
+
+  tasks:
+    - name: print the varible from the inventory file
+      debug:
+        msg: Hi my name is " {{ user_name }}", and location is "{{ location }}"
+
+
