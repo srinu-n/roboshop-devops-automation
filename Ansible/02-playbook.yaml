@@ -1,0 +1,13 @@
+- name: learning about the varibles in ansible
+  hosts: webServers
+  become: yes
+  become_user: root
+  vars:
+    name: Srinivasulu
+    age: 30
+    technology: DevOps
+    location: Hyderabad
+  tasks:
+    - name: print the varibles
+      debug:
+        msg: # nothing provided means it will print the default message hello world
