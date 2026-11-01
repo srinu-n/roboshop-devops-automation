@@ -1,9 +1,6 @@
-
-#the datatype in yaml
-
 - name: The first ansible playbook
-  hosts: web servers
-  become_user: sudo
+  hosts: webServers
+  become_user: root
   tasks:
     - name: install the nginx
       ansible.builtin.dnf:
