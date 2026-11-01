@@ -1,11 +1,11 @@
 - name: varibles from the prompt
   hosts: webServers
   vars_prompt:
-    -  user_name: username
+    -  name: username
        prompt: what is your name?
        private: false
       
-    - user_password: password
+    - name: password
       prompt: enter the password
       private: true
 
@@ -13,4 +13,4 @@
   tasks:
     - name: print the username & password
       debug:
-        msg: Hi my name is "{{ user_name }}" and password is "{{ user_password }}"
+        msg: Hi my name is "{{ username }}" and password is "{{ password }}"
