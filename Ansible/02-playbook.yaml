@@ -10,4 +10,4 @@
   tasks:
     - name: print the varibles
       debug:
-        msg: # nothing provided means it will print the default message hello world
+        msg: Hi my name is "{{   }}"   # nothing provided means it will print the default message hello world
