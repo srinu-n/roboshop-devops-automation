@@ -2,11 +2,11 @@
 #the datatype in yaml
 
 - name: The first ansible playbook
-  hosts: all
+  hosts: web servers
   become_user: sudo
   tasks:
     - name: install the nginx
       ansible.builtin.dnf:
         name: nginx
         state: latest
-        
+
