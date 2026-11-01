@@ -1,4 +1,4 @@
-- name: varibles from the prompt
+- name: varibles from the group vars
   hosts: webServers
   become: yes
 
