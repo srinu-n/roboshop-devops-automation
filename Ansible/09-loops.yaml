@@ -1,0 +1,17 @@
+- name: working on loops 
+  hosts: webServers
+  become: yes
+
+  tasks:
+    - name: install the packages using loops
+      package: {{ item }} 
+      state: present
+      loop:
+        - nginx
+        - httpd
+        - vim
+        - git
+
+
+
+
