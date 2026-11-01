@@ -4,8 +4,9 @@
 
   tasks:
     - name: install the packages using loops
-      package: {{ item }} 
-      state: present
+      package: 
+        name: "{{ item }}"
+        state: present
       loop:
         - nginx
         - httpd
