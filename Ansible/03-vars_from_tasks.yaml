@@ -1,0 +1,10 @@
+- name: variables from tasks
+  hosts: webServers
+  become: yes
+  tasks:
+    - name: variblaes from the tasks
+      vars:
+        package_name: nginx
+      package:
+        name: {{ package_name }}
+        state: absent 
