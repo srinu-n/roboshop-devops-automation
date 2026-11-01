@@ -1,0 +1,10 @@
+- name: varibles from the prompt
+  hosts: webServers
+  become: yes
+
+  tasks:
+    - name: print the varible from the vars_files
+      debug:
+        msg: Hi my name is " {{ name }}", and location is "{{ location }}"
+
+
