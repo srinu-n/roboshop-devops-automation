@@ -3,7 +3,7 @@
   become: yes
   become_user: root
   vars:
-    name: Srinivasulu
+    my_name: Srinivasulu   # name is a reserved varible not recommended to use
     age: 30
     technology: DevOps
     location: Hyderabad
