@@ -1,5 +1,8 @@
 - name: conditions 
   hosts: webServers
+  vars:
+    name: srinu
+    location: hyderabad
   become: yes
 
   tasks:
@@ -7,6 +10,6 @@
       debug:
         msg: Hi my name is " {{ user_name }}", and location is "{{ location }}"
       when: name == "srinu"
-      
+
 
 
