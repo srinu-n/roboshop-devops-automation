@@ -10,4 +10,4 @@
   tasks:
     - name: print the varibles
       debug:
-        msg: Hi my name is "{{ my_name  }}", i am from "{{ location }}", and my age is "{{ age }}", and my domain is "{{ dtechnology }}"   # nothing provided means it will print the default message hello world
+        msg: Hi my name is "{{ my_name  }}", i am from "{{ location }}", and my age is "{{ age }}", and my domain is "{{ technology }}"   # nothing provided means it will print the default message hello world
