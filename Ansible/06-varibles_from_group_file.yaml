@@ -3,8 +3,8 @@
   become: yes
 
   tasks:
-    - name: print the varible from the vars_files
+    - name: print the varible from the group_vars file
       debug:
-        msg: Hi my name is " {{ name }}", and location is "{{ location }}"
+        msg: Hi my name is " {{ user_name }}", and location is "{{ location }}"
 
 
