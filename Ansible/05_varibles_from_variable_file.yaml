@@ -1,0 +1,12 @@
+- name: varibles from the prompt
+  hosts: webServers
+  become: yes
+  vars_files:
+    - vars_file.yaml
+
+  tasks:
+    - name: print the varible from the vars_files
+      debug:
+        msg: Hi my name is " {{ name }}", and location is "{{ location }}"
+
+
