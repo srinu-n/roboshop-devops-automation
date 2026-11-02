@@ -7,4 +7,4 @@
   tasks:
     - name: convert the strings into lists
       debug:
-        msg: "{{ name | default(srinu) }}"
+        msg: "{{ user_name | default('venky') }}"
