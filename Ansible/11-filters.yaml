@@ -12,6 +12,5 @@
 
     - name:  convert the string to list 
       debug:
-        msg: "{{ item.topics | .split(',') }}"
-      loop:
-        - "{{ topics }}"
+        msg: "{{ topics.split(',') }}"
+
