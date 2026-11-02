@@ -3,8 +3,13 @@
   connection: local
   vars: 
     topics: linux, ansible, terraform, AWS
+    user_name:
   become: yes
   tasks:
-    - name: convert the strings into lists
+    - name: assign the default value to a varibla
       debug:
         msg: "{{ user_name | default('venky') }}"
+
+    - name:  convert the string to list 
+      debug:
+        msg: "{{ topics | .split(',') }}"
