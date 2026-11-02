@@ -14,4 +14,4 @@
       debug:
         msg: "{{ item.topics | .split(',') }}"
       loop:
-        "{{ topics }}"
+        - "{{ topics }}"
