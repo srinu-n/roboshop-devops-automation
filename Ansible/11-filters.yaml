@@ -3,7 +3,7 @@
   connection: local
   vars: 
     topics: linux, ansible, terraform, AWS
-    user_name:
+    user_name: bala
   become: yes
   tasks:
     - name: assign the default value to a varibla
@@ -12,4 +12,6 @@
 
     - name:  convert the string to list 
       debug:
-        msg: "{{ topics | .split(',') }}"
+        msg: "{{ item.topics | .split(',') }}"
+      loop:
+        "{{ topics }}"
