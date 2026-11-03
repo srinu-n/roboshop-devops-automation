@@ -4,6 +4,10 @@
   vars: 
     topics: linux, ansible, terraform, AWS
     user_name: bala
+    map_to_list:
+      name: srinu
+      location: hyderabad
+      married: true
   become: yes
   tasks:
     - name: assign the default value to a varibla
@@ -14,3 +18,12 @@
       debug:
         msg: "{{ topics.split(',') }}"
 
+    - name: loop over the list of topics
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ topics.split(',') }}"
+
+    - name: convert the map to list
+      debug:
+        msg: {{ map_to_list | dict2items }}
+    
