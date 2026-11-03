@@ -17,6 +17,6 @@
         security_group:
           - common-sg
           - "roboshop-{{ item }}-sg" 
-        region: " {{ desired_region }} "
+        region: "{{ desired_region }}"
       loop: "{{ machine_name }}"
 
