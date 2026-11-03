@@ -13,9 +13,11 @@
         name: "{{ item }}"
         instance_type: "{{ instance_type }}"
         image_id: "{{ ami_id }}"
-        security_group:
+        vpc_id: vpc-0bf3a8f73da50ede9
+        security_groups:
           - common-sg
-          - "roboshop-{{ item }}-sg" 
+          - "roboshop-{{ item }}"
+        wait: yes
         region: "{{ desired_region }}"
       loop: "{{ machine_name }}"
 
