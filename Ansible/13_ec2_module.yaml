@@ -31,7 +31,7 @@
         filters:
               instance-state-name: running
         region: "{{ desired_region }}"
-      when: action == 'delete'
+      when: action == 'delete' and name != 'roboshop-ansible'
 
         
     - name: get the pvt ip and update r53 record
