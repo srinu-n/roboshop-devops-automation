@@ -13,7 +13,7 @@
         name: "{{ item }}"
         instance_type: "{{ instance_type }}"
         image_id: "{{ ami_id }}"
-        vpc_id: vpc-0bf3a8f73da50ede9
+        vpc_subnet_id: subnet-031fd246742193653 
         security_groups:
           - common-sg
           - "roboshop-{{ item }}"
