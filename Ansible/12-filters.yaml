@@ -12,5 +12,6 @@
     
     - name: create the user
       command: useradd "{{ user }}"
+      become: yes
       when: cmd_result.rc != 0
 
