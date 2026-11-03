@@ -1,0 +1,9 @@
+- name: create a user if not exists
+  connection: local
+  hosts: local
+  vars:
+    user: srinu
+  
+  tasks:
+    - name: check user exists or not
+      command: id "{{ user }}"
