@@ -27,9 +27,9 @@
 
     - name: delete the ec2 machine if action is delete
       amazon.aws.ec2_instance:
-      state: absent
-      filters:
-        instance-state-name: running
+        state: absent
+        filters:
+          instance-state-name: running
       when: name in machine_name and action == 'delete'
 
     
