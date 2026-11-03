@@ -7,3 +7,10 @@
   tasks:
     - name: check user exists or not
       command: id "{{ user }}"
+      ignore_errors: true  # the playbook execution will continue even on errors
+      register: cmd_result
+    
+    - name: create the user
+      command: useradd "{{ user }}"
+      when: cmd_result.rc != 0
+
