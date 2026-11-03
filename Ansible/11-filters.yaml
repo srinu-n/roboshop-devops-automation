@@ -25,5 +25,5 @@
 
     - name: convert the map to list
       debug:
-        msg: {{ map_to_list | dict2items }}
+        msg: "{{ map_to_list | dict2items }}"
     
