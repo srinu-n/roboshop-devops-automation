@@ -30,7 +30,7 @@
         state: absent
         filters:
           instance-state-name: running
-      when: name in machine_name and action == 'delete'
+      when: action == 'delete' and
 
     
     - name: get the pvt ip and update r53 record
