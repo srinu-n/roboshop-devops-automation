@@ -12,6 +12,7 @@
     
     - name: create the user
       command: useradd "{{ user }}"
+      become_method: sudo
       become: yes
       when: cmd_result.rc != 0
 
