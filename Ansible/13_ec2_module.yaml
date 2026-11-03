@@ -30,8 +30,7 @@
         state: absent
         filters:
           instance-state-name: running
-      when: action == 'delete' and name == {{ item }}
-      loop: "{{ machine_name }}"
+      when: action == 'delete' 
 
     
     - name: get the pvt ip and update r53 record
