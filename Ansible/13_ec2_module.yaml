@@ -16,9 +16,7 @@
         image_id: "{{ ami_id }}"
         security_group:
           - common-sg
-          - roboshop-"{{ item }}"-sg   
+          - "roboshop-{{ item }}-sg" 
         region: " {{ desired_region }} "
-      loop:
-        - "{{ machine_name }}"
-
+      loop: "{{ machine_name }}"
 
