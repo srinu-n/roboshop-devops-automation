@@ -29,20 +29,19 @@
       amazon.aws.ec2_instance:
         state: absent
         filters:
-          instance-state-name: running
-      when: action == 'delete' 
+              instance-state-name: running
 
-    
+        
     - name: get the pvt ip and update r53 record
       amazon.aws.route53:
         state: present
         zone: "{{ zone }}"
-        record: "roboshop-{{ item }}.{{ zone }}"
+        record: "roboshop-{{ item.item }}.{{ zone }}"
         type: A
         ttl: 1
-        value: "{{ ec2_result.results[loop.index0].instances[0].private_ip_address }}"
+        value: "{{ item.instances[0].private_ip_address }}"
         overwrite: yes
-      loop: "{{ machine_name }}"
+      loop: "{{ ec2_result.results }}"
       when: action == 'create'
 
     - name: update the public ip if name of the machine is frontend
@@ -52,6 +51,7 @@
         record: "roboshop.{{ zone }}"
         type: A
         ttl: 1
-        value: "{{ ec2_result.results[loop.index0].instances[0].public_ip_address }}"
-      loop: "{{ machine_name }}"
-      when: item == 'frontend' and action == 'create'
+        value: "{{ item.instances[0].public_ip_address }}"
+        overwrite: yes
+      loop: "{{ ec2_result.results }}"
+      when: item.item == 'frontend' and action == 'create'
