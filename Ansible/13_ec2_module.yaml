@@ -11,7 +11,7 @@
   tasks:
     - name: create the ec2-machine
       amazon.aws.ec2_instance:
-        name: "{{ item }}"
+        name: "roboshop-{{ item }}"
         instance_type: "{{ instance_type }}"
         image_id: "{{ ami_id }}"
         vpc_subnet_id: subnet-031fd246742193653 
@@ -31,7 +31,7 @@
         filters:
               instance-state-name: running
         region: "{{ desired_region }}"
-      when: action == 'delete' and name != 'roboshop-ansible'
+      when: action == 'delete' 
 
         
     - name: get the pvt ip and update r53 record
