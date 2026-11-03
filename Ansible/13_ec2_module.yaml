@@ -6,7 +6,8 @@
     instance_type: t3.micro
     ami_id: ami-0055977a6e828a4f4
     desired_region: us-east-1
-    # prefix: roboshop
+    action: create
+    zone: srinun.in
   tasks:
     - name: create the ec2-machine
       amazon.aws.ec2_instance:
@@ -20,4 +21,37 @@
         wait: yes
         region: "{{ desired_region }}"
       loop: "{{ machine_name }}"
+      when: action == 'create'
+      register: ec2_result
 
+
+    - name: delete the ec2 machine if action is delete
+      amazon.aws.ec2_instance:
+      state: absent
+      filters:
+        instance-state-name: running
+      when: name in machine_name and action == 'delete'
+
+    
+    - name: get the pvt ip and update r53 record
+      amazon.aws.route53:
+        state: present
+        zone: "{{ zone }}"
+        record: "roboshop-{{ item }}.{{ zone }}"
+        type: A
+        ttl: 1
+        value: "{{ ec2_result.results[loop.index0].instances[0].private_ip_address }}"
+        overwrite: yes
+      loop: "{{ machine_name }}"
+      when: action == 'create'
+
+    - name: update the public ip if name of the machine is frontend
+      amazon.aws.route53:
+        state: present
+        zone: "{{ zone }}"
+        record: "roboshop.{{ zone }}"
+        type: A
+        ttl: 1
+        value: "{{ ec2_result.results[loop.index0].instances[0].public_ip_address }}"
+      loop: "{{ machine_name }}"
+      when: item == 'frontend' and action == 'create'
