@@ -1,5 +1,4 @@
 - name: create the infra for the roboshop
-  become: yes
   connection: local
   hosts: local
   vars:
