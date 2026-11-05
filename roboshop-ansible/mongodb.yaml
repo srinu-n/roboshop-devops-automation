@@ -21,7 +21,7 @@
     - name: Update listen address from 127.0.0.1 to 0.0.0.0 in /etc/mongod.conf
       replace:
         path: /etc/mongod.conf
-        regex: '127.0.0.1'
+        regexp: '127.0.0.1'
         replace: '0.0.0.0'
     
     - name: Restart the service to make the changes effected.
