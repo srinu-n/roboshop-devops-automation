@@ -64,5 +64,5 @@
     - name: start and enable the service
       systemd:
         name: payment
-        state: started
+        state: restarted
         enabled: true
