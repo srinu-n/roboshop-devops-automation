@@ -59,6 +59,12 @@
         name: mysql
         state: present
 
+
+    - name: install PyMySQL for the Ansible MySQL module
+      dnf:
+        name: python3-PyMySQL
+        state: present
+
           
     - name: load the shipping schema
       community.mysql.mysql_db:
