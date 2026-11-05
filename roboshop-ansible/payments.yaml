@@ -35,6 +35,18 @@
         dest: /app
         remote_src: yes
 
+    - name: let the service read the application files
+      file:
+        path: /app
+        state: directory
+        mode: "0755"
+
+    - name: keep uWSGI on the systemd user
+      lineinfile:
+        path: /app/payment.ini
+        regexp: "^(uid|gid)\\s*="
+        state: absent
+
     - name: install the dependencies
       pip:
         requirements: /app/requirements.txt
