@@ -2,7 +2,7 @@
   connection: local
   hosts: local
   vars:
-    machine_name: [ 'mongodb', 'catalogue' ]
+    machine_name: [ 'mongodb', 'catalogue', 'user', 'payment', 'cart', 'shipping', 'mysql', 'redis', 'rabbitmq', 'frontend' ]
     instance_type: t3.micro
     ami_id: ami-0055977a6e828a4f4
     desired_region: us-east-1
