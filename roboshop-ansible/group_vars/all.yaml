@@ -1,0 +1,21 @@
+
+user_r53_record: roboshop-user.srinun.in
+
+payment_r53_record: roboshop-payments.srinun.in
+
+
+cart_r53_record: roboshop-cart.srinun.in
+
+shipping_r53_record: roboshop-shipping.srinun.in
+
+mysql_r53_record: roboshop-mysql.srinun.in
+
+mongodb_r53_record: roboshop-mongodb.srinun.in
+
+rabbitmq_r53_record: roboshop-rabbitmq.srinun.in
+
+
+redis_r53_record: roboshop-redis.srinun.in
+
+frontend_r53_record: roboshop.srinun.in
+
