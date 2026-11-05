@@ -14,7 +14,7 @@
     - name: open the redis to external world
       replace: 
         path: /etc/redis/redis.conf
-        regex: 127.0.0.1
+        regexp: 127.0.0.1
         replace: 0.0.0.0
   
     - name: disable the protected mode in redis
