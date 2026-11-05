@@ -1,0 +1,34 @@
+- name: installing the mongdb for the roboshop
+  hosts: mongodb
+  become: yes
+  tasks:
+    - name: copy the repo to mongo repo location
+      copy:
+        src: mongo_repo.file
+        dest: /etc/yum.repos.d/mongo.repo
+    
+    - name: install mongodb org
+      package:
+        name: mongodb-org
+        state: present
+    
+    - name: start and enabled the  mongodb service
+      service:
+        name: mongod
+        state: started
+        enabled : true
+
+    - name: Update listen address from 127.0.0.1 to 0.0.0.0 in /etc/mongod.conf
+      replace:
+        path: /etc/mongod.conf
+        regex: '127.0.0.1'
+        replace: '0.0.0.0'
+    
+    - name: Restart the service to make the changes effected.
+      service:
+        name: mongod
+        state: restarted
+    
+
+
+

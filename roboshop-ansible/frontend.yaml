@@ -1,0 +1,45 @@
+- name: frontend setup for the roboshop
+  hosts: frontend
+  become: yes
+  tasks:
+    - name: enable the nginx module
+      command: dnf module enable nginx:1.24 -y
+    
+    - name: install the nginx
+      dnf:
+        name: nginx 
+        state: present
+    
+    - name: enable and start nginx
+      systemd:
+        name: nginx
+        enabled: true
+        state: started
+
+    - name: remove the default content /usr/share/nginx/html/*
+      shell: rm -rf /usr/share/nginx/html/*
+    
+    - name: download the frontend content
+      get_url:
+        url: https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
+        dest: /tmp/frontend.zip
+
+
+    - name: un archive the frontend file
+      unarchive:
+        src: /tmp/frontend.zip
+        dest: /usr/share/nginx/html
+        remote_src: true 
+
+    - name: copy the config file to this location /etc/nginx/nginx.conf
+      copy:
+        src: nginx_config.file
+        dest: /etc/nginx/nginx.conf
+
+    - name: enable and re start the services
+      systemd:
+        name: nginx
+        state: restarted
+        
+    
+

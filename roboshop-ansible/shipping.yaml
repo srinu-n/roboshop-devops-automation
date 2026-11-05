@@ -1,0 +1,86 @@
+- name: set up the shipping service for roboshop
+  hosts: shipping
+  become: yes
+  tasks:
+    - name: install maven
+      dnf:
+        name: maven
+        state: present
+
+    
+    - name: create a system user for the roboshop
+      user:
+        name: roboshop
+        shell: /sbin/nologin
+        comment: 'roboshop system user'
+        system: true
+        home: /app
+
+    - name: create the /app directory to download the code
+      file:
+        path: /app
+        state: directory
+    
+    - name: download the code
+      get_url:
+        url: https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip
+        dest: /tmp/shipping.zip
+
+    - name: unzip the code
+      unarchive:
+        src: /tmp/shipping.zip
+        dest: /app
+        remote_src: yes
+    
+    - name: mvn clean package
+      command: 
+        cmd: mvn clean package
+        chdir: /app
+
+    - name: copy the target/shipping-1.0.jar to /app/shipping.jar
+      copy:
+        src: /app/target/shipping-1.0.jar
+        dest: /app/shipping.jar
+        remote_src: true
+
+    - name: copy the service file
+      copy: 
+        src: shipping_service.file
+        dest: /etc/systemd/system/shipping.service
+    
+    - name: start and enable the service
+      systemd:
+        name: shipping
+        state: started
+        enabled: true
+
+    - name: install the mysql client
+      dnf:
+        name: mysql
+        state: present
+
+          
+    - name: load the shipping schema
+      community.mysql.mysql_db:
+        name: shipping
+        state: import
+        target: "{{ item }}"
+        login_user: root
+        login_password: RoboShop@1
+        login_host: roboshop-mysql.srinun.in
+      loop:
+        - /app/db/schema.sql
+        - /app/db/app-user.sql
+        - /app/db/master-data.sql
+
+    
+    - name: daemon reload the shipping service
+      systemd:
+        daemon_reload: yes
+
+    
+    - name: restart the shipping service
+      systemd:
+        name: shipping
+        enabled: true
+        state: restarted

@@ -1,0 +1,87 @@
+- name: installing the catalogue for the roboshop
+  hosts: catalogue
+  become: yes
+  tasks:
+    - name: enable the required nodejs module
+      command: dnf module enable nodejs:20 -y
+
+    - name: install the nodejs package
+      dnf:
+        name: nodejs
+        state: present
+
+    - name: create the system user
+      user:
+        name: roboshop
+        shell: /sbin/nologin
+        state: present
+        system: true
+        move_home: true
+        home: /app
+        comment: "roboshop system user"
+    
+    - name: Create a directory to download the app code
+      file:
+        path: /app
+        state: directory
+
+    
+    - name: download the code to /app dir
+      get_url:
+        url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+        dest: /tmp/catalogue.zip
+
+    - name: un zip the code from the /tmp/catalogue.zip folder
+      unarchive:
+        src: /tmp/catalogue.zip
+        dest: /app 
+        remote_src: true
+
+
+    - name: download the dependencies.
+      command:
+        cmd: npm install
+        chdir: /app
+
+    - name: set up systemd file  /etc/systemd/system/catalogue.service
+      copy:
+        src: catalogu_repo.file
+        dest: /etc/systemd/system/catalogue.service
+    
+
+    - name: start and enable the catalogue service
+      systemd:
+        name: catalogue
+        daemon_reload: true
+        state: started
+        enabled: true
+
+    - name: copy the mongo client repo to /etc/yum.repos.d/mongo.repo
+      copy: 
+        src: mongosh_repo.file
+        dest: /etc/yum.repos.d/mongo.repo
+
+    
+    - name: install mongdb cline
+      dnf:
+        name: mongodb-mongosh
+        state: present
+
+    - name: load the catalogue master data
+      shell: mongosh --host roboshop-mongodb.srinun.in catalogue < /app/db/master-data.js
+    
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
