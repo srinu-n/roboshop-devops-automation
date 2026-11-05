@@ -67,13 +67,7 @@
 
           
     - name: load the shipping schema
-      community.mysql.mysql_db:
-        name: shipping
-        state: import
-        target: "{{ item }}"
-        login_user: root
-        login_password: RoboShop@1
-        login_host: roboshop-mysql.srinun.in
+      shell: mysql -h roboshop-mysql.srinun.in -uroot -pRoboShop@1 < {{ item }}
       loop:
         - /app/db/schema.sql
         - /app/db/app-user.sql
