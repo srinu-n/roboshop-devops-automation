@@ -1,0 +1,28 @@
+
+  - name: copy the repo to rabbitmq repo location using the template module
+    template:
+      src: rabbit_mq.j2
+      dest: /etc/yum.repos.d/rabbitmq.repo
+
+  - name: install the rabbitmq
+    dnf:
+      name: rabbitmq-server
+      state: present
+  
+  - name: start and enable the rabbitmq service
+    systemd:
+      name: rabbitmq-server
+      state: started
+      enabled: true
+
+  - name: check whether the roboshop rabbitmq user exists
+    command: rabbitmqctl list_users
+    register: rabbit_users
+    changed_when: false
+
+  - name: add the user for the roboshop
+    command: rabbitmqctl add_user roboshop roboshop123
+    when: rabbit_users.stdout is not search('(?m)^roboshop\\s')
+
+  - name: set the permission for the roboshop user
+    command: rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"

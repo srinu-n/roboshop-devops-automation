@@ -1,0 +1,65 @@
+
+  - name: install the python3 and pip3
+    dnf:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - python3
+      - gcc
+      - python3-devel
+
+  - name: create a system user for the roboshop
+    user:
+      name: roboshop
+      shell: /sbin/nologin
+      comment: 'roboshop system user'
+      system: true
+      home: /app
+
+  - name: create the /app directory to download the code
+    file:
+      path: /app
+      state: directory
+  
+  - name: download the code
+    get_url:
+      url: https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip
+      dest: /tmp/payment.zip
+
+  - name: unzip the code
+    unarchive:
+      src: /tmp/payment.zip
+      dest: /app
+      remote_src: yes
+
+  - name: let the service read the application files
+    file:
+      path: /app
+      state: directory
+      mode: "0755"
+
+  - name: keep uWSGI on the systemd user
+    lineinfile:
+      path: /app/payment.ini
+      regexp: "^(uid|gid)\\s*="
+      state: absent
+
+  - name: install the dependencies
+    pip:
+      requirements: /app/requirements.txt
+      executable: pip3
+  
+  - name: copy the service file
+    template:
+      src: payments_service.j2
+      dest: /etc/systemd/system/payment.service
+
+  - name: daemon reload
+    systemd:
+      daemon_reload: yes
+    
+  - name: start and enable the service
+    systemd:
+      name: payment
+      state: restarted
+      enabled: true
