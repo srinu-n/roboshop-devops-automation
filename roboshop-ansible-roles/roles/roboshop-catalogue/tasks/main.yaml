@@ -3,8 +3,11 @@
 
   - name: install nodejs
     dnf:
-      name: nodejs
+      name: "{{ item }}"
       state: present
+    loop:
+      - nodejs
+      - mongodb-mongosh
   
   - name: create a system user for the roboshop
     user:
@@ -47,6 +50,14 @@
       state: started
       enabled: true
       daemon_reload: yes
+
+
+  - name: copy the mongo client repo to /etc/yum.repos.d/mongo.repo
+    copy: 
+      src: mongosh_repo.j2
+      dest: /etc/yum.repos.d/mongo.repo
+
+  
 
   - name: load the catalogue master data
     shell: mongosh --host roboshop-mongodb.srinun.in catalogue < /app/db/master-data.js
