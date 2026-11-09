@@ -1,5 +1,10 @@
   - name: enable the node js
     command: dnf module enable nodejs:20 -y
+  
+  - name: copy the mongo client repo to /etc/yum.repos.d/mongo.repo
+    template: 
+      src: mongosh_repo.j2
+      dest: /etc/yum.repos.d/mongo.repo
 
   - name: install nodejs
     dnf:
@@ -52,11 +57,9 @@
       daemon_reload: yes
 
 
-  - name: copy the mongo client repo to /etc/yum.repos.d/mongo.repo
-    copy: 
-      src: mongosh_repo.j2
-      dest: /etc/yum.repos.d/mongo.repo
 
+
+  
   
 
   - name: load the catalogue master data
