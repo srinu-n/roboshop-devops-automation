@@ -1,0 +1,34 @@
+
+  - name: enable redis module is command module
+    command: dnf module enable redis:7 -y
+  
+  - name: install redis
+    dnf:
+      name: "{{ component }}"
+      state: present
+
+
+  - name: open the redis to external world
+    replace: 
+      path: /etc/redis/redis.conf
+      regexp: 127.0.0.1
+      replace: 0.0.0.0
+
+  - name: disable the protected mode in redis
+    lineinfile:
+      path: /etc/redis/redis.conf
+      regex: protected-mode
+      line: protected-mode no
+
+  - name: enable and restart redis
+    systemd:
+      name: "{{ component }}"
+      enabled: true
+      state: restarted
+
+
+  - name: enable and start the redis service
+    systemd:
+      name: "{{ component }}"
+      enabled: true
+      state: started

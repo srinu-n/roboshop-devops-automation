@@ -1,0 +1,6 @@
+- name: set up the {{ component }} service
+  hosts: redis
+  become: yes
+  roles:
+    - role: roboshop-redis
+    
