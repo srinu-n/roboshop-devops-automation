@@ -1,0 +1,5 @@
+- name: set up the {{ component }} service
+  hosts: mongodb
+  become: yes
+  roles:
+    - role: roboshop-mongodb
