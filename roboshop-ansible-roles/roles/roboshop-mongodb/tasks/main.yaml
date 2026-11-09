@@ -1,6 +1,6 @@
 
-  - name: copy the repo to mongo repo location
-    copy:
+  - name: copy the repo  from the template mongo repo location
+    template:
       src: mongo_repo.j2
       dest: /etc/yum.repos.d/mongo.repo
   
