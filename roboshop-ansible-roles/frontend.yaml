@@ -1,4 +1,4 @@
-- name: frontend setup for the roboshop
+- name:  setup the {{ component }} service
   hosts: frontend
   become: yes
   roles:
