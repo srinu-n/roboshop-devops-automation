@@ -1,2 +1,21 @@
 ansible_user: ec2-user
 ansible_password: DevOps321  # we can later move the secrets to ansible vault or secrets manager
+
+
+mongodb_host: roboshop-mongodb.srinun.in
+
+catalogue_host: roboshop-catalogue.srinun.in
+
+frontend_host: roboshop-frontend.srinun.in
+
+cart_host: roboshop-cart.srinun.in
+shipping_host: roboshop-shipping.srinun.in
+mysql_host: roboshop-mysql.srinun.in
+
+rabbitmq_host: roboshop-rabbitmq.srinun.in
+
+user_host: roboshop-user.srinun.in
+
+payments_host: roboshop-payments.srinun.in
+
+redis_host: roboshop-redis.srinun.in
