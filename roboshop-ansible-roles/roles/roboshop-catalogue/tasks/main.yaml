@@ -47,3 +47,6 @@
       state: started
       enabled: true
       daemon_reload: yes
+
+  - name: load the catalogue master data
+    shell: mongosh --host roboshop-mongodb.srinun.in catalogue < /app/db/master-data.js
