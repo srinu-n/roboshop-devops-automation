@@ -7,6 +7,6 @@
   service:
     state: started
     enabled: yes
-    name: "{{ component }}"
+    name: "{{ component }}-d"
 - name: setup root password
   command: mysql_secure_installation --set-root-pass RoboShop@1
