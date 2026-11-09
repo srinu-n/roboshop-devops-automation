@@ -1,0 +1,5 @@
+- name: configuring {{ component }} server
+  hosts: mysql
+  become: yes
+  roles:
+    - role: roboshop-mysql
