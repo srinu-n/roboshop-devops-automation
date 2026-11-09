@@ -1,0 +1,5 @@
+- name: setup the {{ compnent }} service
+  hosts: catalogue
+  become: yes
+  roles:
+    - role: roboshop-catalogue
