@@ -1,4 +1,4 @@
-- name: setup the {{ compnent }} service
+- name: setup the {{ component }} service
   hosts: catalogue
   become: yes
   roles:
