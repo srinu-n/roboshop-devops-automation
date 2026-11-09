@@ -1,0 +1,7 @@
+- name: set up the cart service
+  hosts: cart
+  become: yes
+  roles:
+    - role: roboshop-cart
+      vars:
+        component: cart
