@@ -19,17 +19,5 @@
     path: /etc/mongod.conf
     regexp: "127.0.0.1"
     replace: "0.0.0.0"
-  changed_when: true
   notify:
     - restart mongod
-  
-
-
-  
-
-- handlers:
-  - name: restart mongod
-    service:
-      name: mongod
-      state: restarted
-
