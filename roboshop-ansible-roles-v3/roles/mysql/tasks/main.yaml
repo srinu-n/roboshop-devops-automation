@@ -9,5 +9,9 @@
     enabled: yes
     name: "{{ component }}d"
 
+- name: read the mysql secret
+  ansible.builtin.set_fact:
+    password: "{{ (lookup('amazon.aws.aws_secret', 'roboshop-mysql', region='us-east-1') | from_json).my_sql_password }}"
+
 - name: setup root password
   command: mysql_secure_installation --set-root-pass '{{ password }}'
