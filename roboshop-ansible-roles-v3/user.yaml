@@ -1,0 +1,5 @@
+- name: set up {{ component }} service
+  hosts: user
+  become: yes
+  roles:
+    - role: user

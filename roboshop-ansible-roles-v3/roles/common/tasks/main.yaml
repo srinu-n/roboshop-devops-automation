@@ -1,0 +1,13 @@
+- name: create a system user for the roboshop
+  user:
+    name: roboshop
+    shell: /sbin/nologin
+    comment: "roboshop system user"
+    system: true
+    home: /app
+
+- name: create the /app directory to download the code
+  file:
+    path: /app
+    state: directory
+    mode: "0755"

@@ -1,0 +1,5 @@
+- name: set up the {{ component }} service
+  hosts: payments
+  become: yes
+  roles:
+    - role: payment

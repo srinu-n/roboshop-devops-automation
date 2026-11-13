@@ -1,0 +1,15 @@
+- name: install the node application
+  import_role:
+    name: nodejs
+
+- name: copy the service file
+  template:
+    src: cart_file.j2
+    dest: "/etc/systemd/system/{{ component }}.service"
+
+- name: start and enable the service
+  systemd:
+    name: "{{ component }}"
+    state: started
+    enabled: true
+    daemon_reload: yes

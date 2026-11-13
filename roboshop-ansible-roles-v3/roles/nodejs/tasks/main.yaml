@@ -1,0 +1,27 @@
+- name: enable the node js
+  command: dnf module enable nodejs:20 -y
+
+- name: install nodejs
+  dnf:
+    name: nodejs
+    state: present
+
+- name: create the roboshop user and app directory
+  import_role:
+    name: common
+
+- name: download the code
+  get_url:
+    url: "https://roboshop-artifacts.s3.amazonaws.com/{{ component }}-v3.zip"
+    dest: "/tmp/{{ component }}.zip"
+
+- name: unzip the code
+  unarchive:
+    src: "/tmp/{{ component }}.zip"
+    dest: /app
+    remote_src: yes
+
+- name: install the dependencies
+  command:
+    cmd: npm install
+    chdir: /app

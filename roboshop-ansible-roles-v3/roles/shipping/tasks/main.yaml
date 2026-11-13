@@ -1,0 +1,66 @@
+- name: create the roboshop user and app directory
+  import_role:
+    name: common
+
+- name: install maven
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - maven
+    - mysql
+
+- name: download the code
+  get_url:
+    url: "https://roboshop-artifacts.s3.amazonaws.com/{{ component }}-v3.zip"
+    dest: "/tmp/{{ component }}.zip"
+
+- name: unzip the code
+  unarchive:
+    src: "/tmp/{{ component }}.zip"
+    dest: /app
+    remote_src: yes
+
+- name: mvn clean package
+  command:
+    cmd: mvn clean package
+    chdir: /app
+
+- name: "copy the target/{{ component }}-1.0.jar to /app/{{ component }}.jar"
+  copy:
+    src: "/app/target/{{ component }}-1.0.jar"
+    dest: "/app/{{ component }}.jar"
+    remote_src: true
+
+- name: copy the service file using the template module
+  template:
+    src: shipping_service.j2
+    dest: "/etc/systemd/system/{{ component }}.service"
+
+- name: start and enable the service
+  systemd:
+    name: "{{ component }}"
+    state: started
+    enabled: true
+
+- name: install PyMySQL for the Ansible MySQL module
+  dnf:
+    name: python3-PyMySQL
+    state: present
+
+- name: load the shipping schema
+  shell: mysql -h roboshop-mysql.srinun.in -uroot -pRoboShop@1 < {{ item }}
+  loop:
+    - /app/db/schema.sql
+    - /app/db/app-user.sql
+    - /app/db/master-data.sql
+
+- name: daemon reload the shipping service
+  systemd:
+    daemon_reload: yes
+
+- name: restart the shipping service
+  systemd:
+    name: shipping
+    enabled: true
+    state: restarted

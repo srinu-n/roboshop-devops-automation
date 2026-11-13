@@ -1,0 +1,5 @@
+- name: setup the {{ component }} service
+  hosts: frontend
+  become: yes
+  roles:
+    - role: frontend

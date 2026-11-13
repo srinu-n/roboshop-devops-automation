@@ -1,0 +1,28 @@
+- name: install the node application
+  import_role:
+    name: nodejs
+
+- name: copy the mongo client repo to /etc/yum.repos.d/mongo.repo
+  template:
+    src: mongosh_repo.j2
+    dest: /etc/yum.repos.d/mongo.repo
+
+- name: install mongosh
+  dnf:
+    name: mongodb-mongosh
+    state: present
+
+- name: copy the service file
+  template:
+    src: catalogue_service.j2
+    dest: "/etc/systemd/system/{{ component }}.service"
+
+- name: start and enable the service
+  systemd:
+    name: "{{ component }}"
+    state: started
+    enabled: true
+    daemon_reload: yes
+
+- name: load the catalogue master data
+  shell: mongosh --host roboshop-mongodb.srinun.in catalogue < /app/db/master-data.js

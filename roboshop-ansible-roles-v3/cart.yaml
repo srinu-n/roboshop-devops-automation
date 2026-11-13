@@ -1,0 +1,5 @@
+- name: set up the {{ component }} service
+  hosts: cart
+  become: yes
+  roles:
+    - role: cart
