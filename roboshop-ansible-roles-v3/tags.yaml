@@ -1,0 +1,21 @@
+- name: just testing how tags will work
+  hosts: localhost
+  tasks:
+    - name: just testing how tags will work
+      debug:
+        msg: "this is a test"
+      tags:
+        - test1
+    - name: just testing how tags will work
+      debug:
+        msg: "this is a test"
+      tags:
+        - test2
+      
+
+    - name: just testing how tags will work
+      debug:
+        msg: "this is a test message from "
+      tags:
+      - test3
+      
