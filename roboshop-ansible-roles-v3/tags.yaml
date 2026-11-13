@@ -3,19 +3,19 @@
   tasks:
     - name: just testing how tags will work
       debug:
-        msg: "this is a test"
+        msg: "this is a test message from task 1"
       tags:
         - test1
     - name: just testing how tags will work
       debug:
-        msg: "this is a test"
+        msg: "this is a test message from task 2"
       tags:
         - test2
       
 
     - name: just testing how tags will work
       debug:
-        msg: "this is a test message from "
+        msg: "this is a test message from task 3"
       tags:
       - test3
       
